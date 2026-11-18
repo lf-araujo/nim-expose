@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Window Overview
+GenericName=Exposé
+Comment=Show all open windows; click one to switch to it, or its × to close it
+Exec=@BINDIR@/nim-expose
+Icon=preferences-system-windows
+Terminal=false
+StartupNotify=false
+Categories=Utility;GTK;
+Keywords=expose;exposé;overview;windows;switch;workspaces;

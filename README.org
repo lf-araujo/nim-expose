@@ -1,0 +1,70 @@
+#+TITLE: nim-expose
+#+AUTHOR: Luis De Araujo
+
+A window overview (Exposé) for [[https://labwc.github.io][labwc]], written in Nim. It runs as a
+separate program, so it needs no patched compositor: press a key and every
+open window appears as a live thumbnail; click one to switch to it (labwc
+also switches to its workspace), or click its × to close it.
+
+* Features
+
+- Thumbnails of all windows, including minimized ones and windows on other
+  workspaces (shown dimmed when minimized).
+- Mouse: click a window to switch to it, its × or a middle click to close it,
+  click elsewhere to dismiss.
+- Keyboard: arrows or Tab to move, Enter to switch, Delete to close, Esc to
+  dismiss.
+- Running it again while it is open closes it, so one keybinding toggles it.
+
+* Requirements
+
+A Wayland compositor that offers these protocols; labwc 0.20 does:
+
+- =ext-foreign-toplevel-list-v1= and =wlr-foreign-toplevel-management= (list,
+  activate and close windows),
+- =ext-image-copy-capture-v1= with the toplevel capture source (thumbnails),
+- =wlr-layer-shell= (the full-screen overlay).
+
+Build: Nim 2.x, GTK 3, gtk-layer-shell, cairo, pango and wayland-client
+(runtime libraries; the generated protocol glue is in the repository).
+
+* Install
+
+#+begin_src sh
+nimble install        # builds and installs nim-expose into ~/.nimble/bin
+nimble desktop        # optional: a "Window Overview" menu entry
+#+end_src
+
+Then bind a key in labwc's =rc.xml=, for example:
+
+#+begin_src xml
+<keybind key="W-Tab">
+  <action name="Execute" command="nim-expose"/>
+</keybind>
+#+end_src
+
+=nim-expose --list= prints the windows the compositor reports, and
+=nim-expose --dump DIR= saves a thumbnail of each, which is handy to check a
+compositor's support.
+
+* Limitations
+
+- Windows are shown in one grid, not grouped by workspace: the Wayland
+  protocols above do not say which workspace a window is on.
+- Thumbnails are captured when the overview opens, not live video.
+- Matching between the two window-list protocols is by app ID and title, in
+  creation order.
+
+* Development
+
+#+begin_src sh
+nimble test                 # layout unit tests
+tests/run-labwc.sh          # stock labwc, headless, with test apps
+#+end_src
+
+Window capture was checked against stock labwc 0.20.3 running headless;
+=tools/vclick.c= drives the pointer for such tests.
+
+* License
+
+MIT; see =LICENSE=. The protocol XML files keep their own licenses.

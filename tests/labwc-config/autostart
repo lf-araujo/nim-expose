@@ -1,0 +1,10 @@
+# Test apps. They get their own data and state directories so they cannot
+# read or change the real session's recent files, sessions or documents.
+export XDG_DATA_HOME="$XDG_RUNTIME_DIR/nim-expose-test/data"
+export XDG_STATE_HOME="$XDG_RUNTIME_DIR/nim-expose-test/state"
+mkdir -p "$XDG_DATA_HOME" "$XDG_STATE_HOME"
+evince &
+sleep 0.5; evince &
+sleep 0.5; evince &
+gnome-calculator &
+gnome-clocks &

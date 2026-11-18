@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- Stock labwc config for testing nim-expose (see tests/run-labwc.sh) -->
+<labwc_config>
+  <theme><name>OpenboxSur-Dark</name><cornerRadius>8</cornerRadius><font name="sans" size="10"/></theme>
+  <desktops number="4">
+    <names>
+      <name>1:💻</name>
+      <name>2:🧪</name>
+      <name>3:🌐</name>
+      <name>4:🎵</name>
+    </names>
+  </desktops>
+  <keyboard>
+    <default />
+    <keybind key="A-F11"><action name="Execute" command="nim-expose"/></keybind>
+  </keyboard>
+  <windowRules>
+    <windowRule identifier="org.gnome.Calculator">
+      <action name="SendToDesktop" to="2" follow="no"/>
+    </windowRule>
+    <windowRule identifier="org.gnome.clocks">
+      <action name="SendToDesktop" to="3" follow="no"/>
+    </windowRule>
+  </windowRules>
+</labwc_config>
